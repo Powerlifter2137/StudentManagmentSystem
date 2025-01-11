@@ -4,6 +4,7 @@ public class Student {
     private double grade;
     private String studentID;
 
+    //konstruktor klasy student
     public Student(String studentID, String name, int age, double grade) {
         this.studentID = studentID;
         this.name = name;
@@ -11,6 +12,7 @@ public class Student {
         this.grade = grade;
     }
 
+    //gettery i settery
     public String getName() {
         return name;
     }
@@ -43,6 +45,7 @@ public class Student {
         this.studentID = studentID;
     }
 
+    //metoda do wyswietlania sczegolow studenta
     @Override
     public String toString() {
         return "Student{" +

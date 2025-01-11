@@ -9,48 +9,87 @@ public class MainFrame extends JFrame {
     public MainFrame() {
         // Ustawienia podstawowe
         setTitle("Student Management System");
-        setSize(600, 400);
+        setSize(800, 600);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        setLayout(new BorderLayout());
+        setLayout(new BorderLayout(10, 10));
+        setLocationRelativeTo(null); // Wyśrodkowanie okna
+
+        // Ustawienie stylu Nimbus
+        try {
+            UIManager.setLookAndFeel("javax.swing.plaf.nimbus.NimbusLookAndFeel");
+        } catch (Exception ignored) {
+        }
 
         // Panel wejściowy
-        JPanel inputPanel = new JPanel(new GridLayout(5, 2, 10, 10));
+        JPanel inputPanel = new JPanel(new GridBagLayout());
+        inputPanel.setBorder(BorderFactory.createTitledBorder("Student Details"));
+        GridBagConstraints gbc = new GridBagConstraints();
+        gbc.insets = new Insets(5, 5, 5, 5);
+        gbc.fill = GridBagConstraints.HORIZONTAL;
 
-        inputPanel.add(new JLabel("Student ID:"));
-        studentIdField = new JTextField();
-        inputPanel.add(studentIdField);
+        gbc.gridx = 0;
+        gbc.gridy = 0;
+        inputPanel.add(new JLabel("Student ID:"), gbc);
 
-        inputPanel.add(new JLabel("Name:"));
-        nameField = new JTextField();
-        inputPanel.add(nameField);
+        gbc.gridx = 1;
+        studentIdField = new JTextField(20);
+        inputPanel.add(studentIdField, gbc);
 
-        inputPanel.add(new JLabel("Age:"));
-        ageField = new JTextField();
-        inputPanel.add(ageField);
+        gbc.gridx = 0;
+        gbc.gridy = 1;
+        inputPanel.add(new JLabel("Name:"), gbc);
 
-        inputPanel.add(new JLabel("Grade:"));
-        gradeField = new JTextField();
-        inputPanel.add(gradeField);
+        gbc.gridx = 1;
+        nameField = new JTextField(20);
+        inputPanel.add(nameField, gbc);
 
-        addButton = new JButton("Add Student");
-        removeButton = new JButton("Remove Student");
-        updateButton = new JButton("Update Student");
-        displayButton = new JButton("Display All Students");
-        averageButton = new JButton("Calculate Average");
+        gbc.gridx = 0;
+        gbc.gridy = 2;
+        inputPanel.add(new JLabel("Age:"), gbc);
 
-        inputPanel.add(addButton);
-        inputPanel.add(removeButton);
-        inputPanel.add(updateButton);
-        inputPanel.add(displayButton);
-        inputPanel.add(averageButton);
+        gbc.gridx = 1;
+        ageField = new JTextField(20);
+        inputPanel.add(ageField, gbc);
+
+        gbc.gridx = 0;
+        gbc.gridy = 3;
+        inputPanel.add(new JLabel("Grade:"), gbc);
+
+        gbc.gridx = 1;
+        gradeField = new JTextField(20);
+        inputPanel.add(gradeField, gbc);
 
         add(inputPanel, BorderLayout.NORTH);
 
+        // Panel przycisków
+        JPanel buttonPanel = new JPanel(new GridLayout(1, 5, 10, 10));
+        buttonPanel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
+
+        addButton = new JButton("Add");
+        removeButton = new JButton("Remove");
+        updateButton = new JButton("Update");
+        displayButton = new JButton("Display");
+        averageButton = new JButton("Average");
+
+        buttonPanel.add(addButton);
+        buttonPanel.add(removeButton);
+        buttonPanel.add(updateButton);
+        buttonPanel.add(displayButton);
+        buttonPanel.add(averageButton);
+
+        add(buttonPanel, BorderLayout.CENTER);
+
         // Panel wyjściowy
-        outputArea = new JTextArea();
+        JPanel outputPanel = new JPanel(new BorderLayout());
+        outputPanel.setBorder(BorderFactory.createTitledBorder("Output"));
+
+        outputArea = new JTextArea(15, 50);
         outputArea.setEditable(false);
+        outputArea.setFont(new Font("Monospaced", Font.PLAIN, 12));
         JScrollPane scrollPane = new JScrollPane(outputArea);
-        add(scrollPane, BorderLayout.CENTER);
+        outputPanel.add(scrollPane, BorderLayout.CENTER);
+
+        add(outputPanel, BorderLayout.SOUTH);
 
         // Obsługa zdarzeń
         addActionListeners();

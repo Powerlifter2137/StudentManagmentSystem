@@ -2,8 +2,11 @@ import java.sql.*;
 import java.util.ArrayList;
 
 public class StudentManagerImpl implements StudentManager {
+
+    //stala zawierajaca sciezke do pliku bazy danych sqlite
     private static final String DB_URL = "jdbc:sqlite:src/main/resources/students.db";
 
+    //metoda do nazwiania polaczenia z baza
     public StudentManagerImpl() throws SQLException {
         try (Connection connection = DriverManager.getConnection(DB_URL);
              Statement statement = connection.createStatement()) {
@@ -16,6 +19,7 @@ public class StudentManagerImpl implements StudentManager {
         }
     }
 
+    //metoda dodawania studenta
     @Override
     public void addStudent(Student student) throws Exception {
         String insertSQL = "INSERT INTO students (studentID, name, age, grade) VALUES (?, ?, ?, ?)";
@@ -29,6 +33,7 @@ public class StudentManagerImpl implements StudentManager {
         }
     }
 
+    //metoda usuwania studenta
     @Override
     public void removeStudent(String studentID) throws Exception {
         String deleteSQL = "DELETE FROM students WHERE studentID = ?";
@@ -42,6 +47,7 @@ public class StudentManagerImpl implements StudentManager {
         }
     }
 
+    //metoda updatowania danych studenta
     @Override
     public void updateStudent(Student student) throws Exception {
         String updateSQL = "UPDATE students SET name = ?, age = ?, grade = ? WHERE studentID = ?";
@@ -58,6 +64,7 @@ public class StudentManagerImpl implements StudentManager {
         }
     }
 
+    //metoda display zwraca liste z bazy
     @Override
     public ArrayList<Student> displayAllStudents() throws Exception {
         String querySQL = "SELECT * FROM students";
@@ -77,6 +84,7 @@ public class StudentManagerImpl implements StudentManager {
         return students;
     }
 
+    //metoda avrage daje srednia z grade
     @Override
     public double calculateAverageGrade() throws Exception {
         String querySQL = "SELECT AVG(grade) AS averageGrade FROM students";
